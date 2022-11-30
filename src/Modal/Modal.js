@@ -8,21 +8,12 @@ function Modal( {closeModal })  {
     let [email, setEmail] = useState('')
     let [password, setPassword] = useState('')
     let [confirmPassword, setConfirmPassword] = useState('')
-    function CreateAccount(){
-        fetch('http://edu.project.etherial.fr/users').then((res) => {
-            res.json().then((json) =>{
-                console.log(json)
-            })
-        })
-    }
 
-    useEffect(() => {
-        CreateAccount()
 
-    }, [])
+
      
     return(
-        <div className="h-full w-full bg-black flex flex-col absolute opacity-40">
+        <div id='changeBgColor' className="h-full w-full bg-black flex flex-col absolute">
             <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
                 <div className="bg-white px-6 py-8 rounded shadow-md text-black w-full ">
                     <button onClick={() => closeModal(false)} className='ml-72 font-black p-1 bg-black text-white '>X</button>
@@ -33,7 +24,9 @@ function Modal( {closeModal })  {
                         name="firstname"
                         placeholder="Firstname"
                         value={firstname}
-                        onChange={(e) => setFirstname(e.target.value)}
+                        onChange={(e) => setFirstname(e.target.value) }
+                        onClick={(e) => console.log(firstname) }
+                        
                         />
 
                     <input 
@@ -42,7 +35,7 @@ function Modal( {closeModal })  {
                         name="lastname"
                         placeholder="Lastname"
                         value={lastname}
-                        onChange={(e) => setFirstname(e.target.value)}
+                        onChange={(e) => setLastname(e.target.value)}
                         />
 
                     <input 
@@ -51,7 +44,7 @@ function Modal( {closeModal })  {
                         name="email"
                         placeholder="Email"
                         value={email}
-                        onChange={(e) => setFirstname(e.target.value)}
+                        onChange={(e) => setEmail(e.target.value)}
                         />
                     <input 
                         type="password"
@@ -59,7 +52,7 @@ function Modal( {closeModal })  {
                         name="password"
                         placeholder="Password"
                         value={password}
-                        onChange={(e) => setFirstname(e.target.value)}
+                        onChange={(e) => setPassword(e.target.value)}
                         />
                     <input 
                         type="password"
@@ -72,29 +65,44 @@ function Modal( {closeModal })  {
                         
 
                     <button
+                        id='button_Submit'
                         type="submit"
-                        className="w-full text-center py-3 rounded bg-green text-dark hover:bg-green-dark focus:outline-none my-1"
+                        className="w-full bg-grey text-center py-3 rounded my-1 "
                         onClick={() => {
-                            
+                            fetch('http://edu.project.etherial.fr/users').then((res) => {
+                                res.json().then((json) =>{
+                                    method: 'POST',
+                                    body: JSON.stringify({
+                                        "firstname": {setFirstname},
+                                        "lastname": {setLastname},
+                                        "email": {setEmail},
+                                        "password": {setPassword},
+                                        "password_verif": {setConfirmPassword}
+                                    }),
+                                    headers: {
+                                        'Content-type': 'application/json; charset=UTF-8',
+                                      }
+                                })
+                            })
                         }}
+    
                     >Create Account</button>
 
                     <div className="text-center text-sm text-grey-dark mt-4">
-                        By signing up, you agree to the 
-                        <a className="no-underline border-b border-grey-dark text-grey-dark" href="#">
+                        By signing up, you agree to the &nbsp;
+                        <a className="no-underline border-b border-grey-dark text-grey-dark hover:text-zinc-600" href="#">
                             Terms of Service
-                        </a> and 
+                        </a> and &nbsp;
                         <a className="no-underline border-b border-grey-dark text-grey-dark" href="#">
                             Privacy Policy
                         </a>
                     </div>
-                </div>
-
-                <div className="text-grey-dark mt-6">
+                    <div className="text-grey-dark mt-6">
                     Already have an account? 
-                    <a className="no-underline border-b border-blue text-blue" href="../login/">
+                    <a className="no-underline border-b border-blue text-blue hover:text-zinc-600" href="../login/">
                         Log in
                     </a>.
+                </div>
                 </div>
             </div>
         </div>
