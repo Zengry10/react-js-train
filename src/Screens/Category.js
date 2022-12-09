@@ -3,6 +3,8 @@ import { Link } from "react-router-dom"
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from "styled-components";
 
+import { StoreContext } from "../Providers/Store"
+
 export default function Category() {
     const [articles, setArticles] = useState([])
     const [choosenCategory, setChoosenCategory] = useState('all')
@@ -32,7 +34,10 @@ export default function Category() {
      
 
     return (
+
+
         <div id="full" className="h-screen w-screen">
+            
                         <p className="flex text-lg mb-8 ml-8 ">Choisir selon la catégorie :</p>
         <>
             <div className="flex mb-10">

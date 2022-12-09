@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react"
 import { Routes, Route, BrowserRouter, Link, useParams } from 'react-router-dom';
-import Article from './Screens/Article'
 import ArticleDetail from './Screens/ArticleDetail'
 import Category from './Screens/Category'
 import Register from './Screens/Register'
 import Login from './Screens/Login'
 import Modal from './Modal/Modal'
+import { StoreProvider } from "./Providers/Store"
 
 
 

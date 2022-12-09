@@ -1,4 +1,6 @@
 import React from 'react'
+import { useForm } from "react-hook-form";
+
 import { useState, useEffect } from "react"
 
 function Modal( {closeModal })  {
@@ -7,7 +9,30 @@ function Modal( {closeModal })  {
     let [lastname, setLastname] = useState('')
     let [email, setEmail] = useState('')
     let [password, setPassword] = useState('')
-    let [confirmPassword, setConfirmPassword] = useState('')
+    let [password_verif, setPassword_verif] = useState('')
+
+    function sendDataRegister(){
+        fetch('http://edu.project.etherial.fr/users', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                firstname: firstname,
+                lastname: lastname,
+                email: email,
+                password: password,
+                password_verif: password_verif
+            })
+        }
+            ).then((res) => {
+                res.json().then((json) =>{
+                    console.log(firstname)
+                    console.log(lastname)
+                    console.log(email)
+                    console.log(password)
+                    console.log(password_verif)
+                })
+            })
+    }
 
 
 
@@ -57,10 +82,10 @@ function Modal( {closeModal })  {
                     <input 
                         type="password"
                         className="block border border-grey-light w-full p-3 rounded mb-4"
-                        name="confirm_password"
+                        name="password_verif"
                         placeholder="Password Confirm"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        value={password_verif}
+                        onChange={(e) => setPassword_verif(e.target.value)}
                         />
                         
 
@@ -68,23 +93,7 @@ function Modal( {closeModal })  {
                         id='button_Submit'
                         type="submit"
                         className="w-full bg-grey text-center py-3 rounded my-1 "
-                        onClick={() => {
-                            fetch('http://edu.project.etherial.fr/users').then((res) => {
-                                res.json().then((json) =>{
-                                    method: 'POST',
-                                    body: JSON.stringify({
-                                        "firstname": {setFirstname},
-                                        "lastname": {setLastname},
-                                        "email": {setEmail},
-                                        "password": {setPassword},
-                                        "password_verif": {setConfirmPassword}
-                                    }),
-                                    headers: {
-                                        'Content-type': 'application/json; charset=UTF-8',
-                                      }
-                                })
-                            })
-                        }}
+                        onClick={() => {sendDataRegister()}}
     
                     >Create Account</button>
 
